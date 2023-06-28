@@ -55,7 +55,7 @@ export default function App() {
           {tasks.map((task) => (
             <li
               key={task.id}
-              className="d-flex flex-row justify-content-between"
+              className="d-flex flex-row justify-content-between align-items-center my-1"
             >
               <input
                 type="checkbox"
