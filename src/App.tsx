@@ -47,12 +47,16 @@ export default function App() {
             type="checkbox"
             checked={showCompletedTasks}
             onChange={toggleCompletedTasks}
+            className="me-2"
           />
           Show completed tasks
         </small>
         <ul>
           {tasks.map((task) => (
-            <li key={task.id}>
+            <li
+              key={task.id}
+              className="d-flex flex-row justify-content-between"
+            >
               <input
                 type="checkbox"
                 value={task.isDone}
@@ -65,7 +69,13 @@ export default function App() {
               ) : (
                 <span>{task.content}</span>
               )}
-              <button onClick={() => deleteTask(task.id)}>Delete</button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => deleteTask(task.id)}
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>
@@ -78,7 +88,9 @@ export default function App() {
             onKeyDown={handleKeyDown}
             className="w-75"
           />
-          <button onClick={addTask}>Add</button>
+          <button type="button" className="btn btn-dark" onClick={addTask}>
+            Add
+          </button>
         </div>
       </div>
       <ul>
