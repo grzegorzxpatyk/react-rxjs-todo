@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { from, Subject } from 'rxjs';
+import { combineLatest, Subject } from 'rxjs';
 
 export type Task = {
   id: string;
@@ -7,7 +7,7 @@ export type Task = {
   isDone: boolean;
 };
 
-const subject = new Subject();
+const todosSubject = new Subject();
 
 const initialState: Task[] = [];
 
@@ -15,10 +15,10 @@ let state = initialState;
 
 export const todoStore = {
   subscribe: (setState: any) => {
-    subject.subscribe(setState);
+    todosSubject.subscribe(setState);
   },
   init: () => {
-    subject.next(state);
+    todosSubject.next(state);
   },
   addTask: (content: string) => {
     const task = {
@@ -27,12 +27,12 @@ export const todoStore = {
       isDone: false,
     };
     state = [...state, task];
-    subject.next(state);
+    todosSubject.next(state);
   },
   removeTask: (id: string) => {
     const tasks = state.filter((task) => task.id !== id);
     state = tasks;
-    subject.next(state);
+    todosSubject.next(state);
   },
   completeTask: (id: string) => {
     const tasks = state.map((task) => {
@@ -42,8 +42,30 @@ export const todoStore = {
       return task;
     });
     state = tasks;
-    subject.next(state);
+    todosSubject.next(state);
   },
 };
 
-const combinedTodoStore = subject.pipe
+const showCompletedSubject = new Subject();
+
+const initialShowCompltedState: boolean = undefined;
+
+let showCompletedState = initialShowCompltedState;
+
+export const showCompletedStore = {
+  subscribe: (setState: any) => {
+    showCompletedSubject.subscribe(setState);
+  },
+  init: () => {
+    showCompletedSubject.next(showCompletedState);
+  },
+  setShowCompleted: (status: boolean) => {
+    showCompletedState = status;
+    showCompletedSubject.next(showCompletedState);
+  },
+};
+
+export const combinedObservable = combineLatest([
+  todosSubject,
+  showCompletedSubject,
+]);

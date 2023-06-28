@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { todoStore } from './state';
+import { combinedObservable, showCompletedStore, todoStore } from './state';
 import './style.css';
 
 export default function App() {
@@ -7,7 +7,20 @@ export default function App() {
   const [newTaskContent, setNewTaskContent] = React.useState('');
   const [showCompletedTasks, setShowCompletedTasks] =
     React.useState<boolean>(true);
-  todoStore.subscribe((val) => setTasks(val));
+
+  React.useLayoutEffect(() => {
+    todoStore.subscribe((val) => setTasks(val));
+    todoStore.init();
+    showCompletedStore.subscribe((val) => setShowCompletedTasks(val));
+    showCompletedStore.init();
+    combinedObservable.subscribe(([todos, showCompleted]: any) => {
+      if (!showCompleted) {
+        setTasks(todos.filter((todo) => todo.isDone === showCompleted));
+      } else {
+        setTasks(todos);
+      }
+    });
+  }, []);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setNewTaskContent(event.target.value);
@@ -33,7 +46,7 @@ export default function App() {
   }
 
   function toggleCompletedTasks(event: React.ChangeEvent<HTMLInputElement>) {
-    setShowCompletedTasks(event.target.checked);
+    showCompletedStore.setShowCompleted(event.target.checked);
   }
 
   return (
@@ -95,7 +108,7 @@ export default function App() {
       </div>
       <ul>
         {tasks.map((task) => (
-          <li>{task.content}</li>
+          <li key={`2ndlist-${task.id}`}>{task.content}</li>
         ))}
       </ul>
     </div>
