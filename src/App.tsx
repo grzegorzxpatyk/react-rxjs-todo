@@ -37,7 +37,7 @@ export default function App() {
   }
 
   return (
-    <div>
+    <div className="m-3">
       <h1>Todo list</h1>
       <p>To make your work easier.</p>
       <div>
@@ -70,13 +70,16 @@ export default function App() {
           ))}
         </ul>
         <h3>Add a task:</h3>
-        <input
-          type="text"
-          value={newTaskContent}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-        />
-        <button onClick={addTask}>Add</button>
+        <div className="d-flex flex-row justify-content-between">
+          <input
+            type="text"
+            value={newTaskContent}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            className="w-75"
+          />
+          <button onClick={addTask}>Add</button>
+        </div>
       </div>
       <ul>
         {tasks.map((task) => (
