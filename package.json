@@ -1,0 +1,22 @@
+{
+  "name": "stackblitz-starters-mlesbp",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@types/react": "18.2.14",
+    "@types/react-dom": "18.2.6",
+    "nanoid": "^4.0.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "rxjs": "^7.8.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "react-scripts": "latest"
+  }
+}
