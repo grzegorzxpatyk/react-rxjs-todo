@@ -19,14 +19,3 @@ li {
   justify-content: space-between;
   align-items: center;
 }
-
-button {
-  background-color: rgb(227, 227, 227);
-  border-radius: 1rem;
-  border: 0;
-  padding: 0.4rem 0.8rem;
-}
-
-button:hover {
-  background-color: rgb(170, 170, 170);
-}
